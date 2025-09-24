@@ -10,16 +10,48 @@ Your task is to add the following dunder methods to this class:
 
 - `__str__(self)`: Returns a string representation of the list.
 - `__len__(self)`: Returns the length of the list.
-- `__add__(self, other)`: Allows the addition of two lists (concatenation).
 - `__getitem__(self, index)`: Allows access to elements by index (e.g., `my_list[2]`).
 - `__setitem__(self, index, value)`: Allows modifying an element by index (e.g., `my_list[2] = 10`).
+- `__add__(self, other)`: Allows the addition of two lists (concatenation). (the two lists has the following type: List.
+                        it should return a new List)
 
 By implementing these methods, you will enable your `List` class to behave like a native Python list, allowing for 
 intuitive operations and interactions.
 """
 
 class List:
-    pass
+    def __init__(self):
+        self._elements = {}
+        self._count = 0
+
+    def append(self, element):
+        self._elements[self._count] = element
+        self._count += 1
+
+    def remove(self, value):
+        for index, element in self._elements.items():
+            if element == value:
+                del self._elements[index]
+                self._count -= 1
+                for i in range(index, self._count):
+                    self._elements[i] = self._elements.pop(i + 1)
+                break
+
+    def pop(self, index):
+        if index < 0 or index >= self._count:
+            raise IndexError("Out of bond Index")
+        element = self._elements.pop(index)
+        self._count -= 1
+        for i in range(index, self._count):
+            self._elements[i] = self._elements.pop(i + 1)
+        return element
+
+    def get_index(self, value):
+        for index, element in self._elements.items():
+            if element == value:
+                return index
+        return -1
+
 
 class TestListDunder(unittest.TestCase):
     def setUp(self):
@@ -51,6 +83,8 @@ class TestListDunder(unittest.TestCase):
         other.append(5)
         result = self.list + other
         self.assertEqual(str(result), "[1, 2, 3, 4, 5]")
+        with self.assertRaises(TypeError):
+            self.list + [2, 3, 4]
 
 def run_tests():
     unittest.main(argv=[''], verbosity=2, exit=False)
