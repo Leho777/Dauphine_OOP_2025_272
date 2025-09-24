@@ -37,7 +37,7 @@ market_caps = {
 }
 
 # Expected Output: ['Apple', 'Microsoft', 'Google', 'Amazon', 'Tesla']
-filtered_list = []
+filtered_list = [key for key, value in market_caps.items() if value > 500]
 print(f"Expected Output: ['Apple', 'Microsoft', 'Google', 'Amazon', 'Tesla'] - output {filtered_list}")
 
 """
@@ -51,7 +51,7 @@ data = [50, 100, 150, 200, 250]
 #[expression for item in iterable if condition] for creating a list
 # Step 1: Find min and max values of the list
 # Step 2: Normalize the numbers
-normalized_value = []
+normalized_value = [(value - min(data)) / (max(data) - min(data)) for value in data]
 print(f"Expected Output: [0, 0.25, 0.5, 0.75, 1] - Output {normalized_value}")
 # Expected Output: [0, 0.25, 0.5, 0.75, 1]
 
@@ -79,8 +79,8 @@ prices = [100, 101, 102, 103, 104]
 dividends = [0, 0.5, 0, 0, 1]
 
 # expected Output: [100, 100.5, 102, 103, 103]
-
-
+list_adjusted_price = [z[0] + z[1] for z in zip(prices, dividends)]
+print(f"Expected Output: [100, 100.5, 102, 103, 103] - Output {list_adjusted_price}")
 
 
 

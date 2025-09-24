@@ -51,6 +51,25 @@ class List:
             if element == value:
                 return index
         return -1
+    
+    def __str__(self):
+        return "[" + ", ".join(str(self._elements[i]) for i in range(self._count)) + "]"
+
+    def __len__(self):
+        return self._count
+    
+    def __getitem__(self, index):
+        if index < 0 or index >= self._count:
+            raise IndexError("Out of bond Index")
+        return self._elements[index]
+    
+    def __setitem__(self, index, value):
+        if index < 0 or index >= self._count:
+            raise IndexError("Out of bond Index")
+        self._elements[index] = value
+
+    def __add__(self, other):
+        pass
 
 
 class TestListDunder(unittest.TestCase):
